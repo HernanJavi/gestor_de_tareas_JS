@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+
+    font-family: 'Inter', sans-serif;
+
+}
+
+h1 {
+    text-align: center;
+    color: rgb(58, 51, 51);
+    margin-bottom: 20px;
+
+}
+
+.div_tareas {
+
+    width: 80vw;
+    min-height: 100vh;
+    background-color: rgb(85, 85, 102);
+    display: flex;
+    flex-direction: column;
+
+}
+
+.cajitas_main {
+
+    display: flex;
+    margin: 0 auto;
+    width: 90%;
+    min-height: 80vh;
+
+}
+
+.main_container {
+
+    display: flex;
+    background-color: blue;
+    min-height: 100vh;
+
+    margin-left: 20vw;
+}
+
+#cajita_uno, #cajita_dos {
+
+    width: 50%;
+    height: 100%;
+    background-color: rgb(131, 131, 177);
+}
+
+#cajita_uno {
+
+    margin-right: 20px;
+}
+
+
+.botonera {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+    width: 20vw;
+    background-color: rgb(241, 238, 233);
+
+}
+
+.botonera button {
+    height: 30vh;
+    color: rgb(64, 64, 248);
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    border: none;
+}
+
+ul li {
+
+    list-style-type: none;
+    font-size: 1.2em;
+    color: rgb(2, 2, 2);
+    padding: 0.5em;
+    margin: 2px;
+    border: 3px solid rgb(245, 235, 235);
+    cursor: pointer;
+}
+
+.id-destacado {
+    font-weight: bold;
+    color: blue;
+}
+
+.tarea-destacado {
+
+    font-weight: bold;
+    color: rgb(255, 35, 35);
+}
+
+.estado-destacado {
+    font-weight: bold;
+    color: rgb(51, 53, 53);
+
+
+}
