@@ -31,8 +31,8 @@ btn_delete.addEventListener('click', BorrarTarea);
 function agregarTarea(e) {
 
     let nombre_Tarea = prompt('Ingrese nombre de Tarea nueva:');
-
-    if (nombre_Tarea === null) {
+    console.log(nombre_Tarea)
+    if (nombre_Tarea === null || nombre_Tarea === "") {
 
         return;
 
@@ -73,13 +73,35 @@ function generarTareaEnDom(tarea) {
 
 //FUNCION BorrarTarea()=>Pide al usuario un ID a buscar,y lo compara con el array global para saber si existe,de ser asi, llama a eliminarTareaEndDom(), quien recibe ese elemento del array
 function BorrarTarea() {
+    //Me aseguro que las listas tengan contenido para proceder a eliminar, ,cajita_destino.children.length === 1=> lo declare asi porque contiene el h1 asi se cumple la condicion 
+    if (ul_lista.children.length === 0 && cajita_destino.children.length === 1) {
+        alert('Comienza a agregando Tareas, para poder eliminarlas !')
+        return;
+    }
+    console.log(ul_lista.children.length)
+    console.log(cajita_destino.children.length)
+    console.log(cajita_destino)
+
     let ID = prompt('Indique ID tarea a eliminar:')
+    if (ID === null || ID === "") {
+
+        return
+    }
+
+    while (isNaN(ID) || ID === "") {
+        ID = prompt('El ID debe ser un numero, vuelva a ingresar:')
+
+    }
+
     let tareaEncontrada = almacenamientoTareas.find(tarea => tarea.id == ID)
 
     if (tareaEncontrada) {
 
         eliminarTareaEnDom(tareaEncontrada, ul_lista)
         eliminarTareaEnDom(tareaEncontrada, cajita_destino)
+    } else {
+
+        alert("No se encontró una tarea con el ID proporcionado.");
     }
 }
 
@@ -99,22 +121,31 @@ function eliminarTareaEnDom(tarea, lista) {
 //si lo encuentra lo modifico en mi array y llamo a la funcion actualizarTareaEnDom()
 function editarTarea() {
     let id = prompt("Ingrese el ID de la tarea que desea editar:");
-    if (id === null) {
+
+    if (id === null || id === "") {
 
         return;
     }
 
-
     let nombre_tarea = prompt('Indique el nuevo nombre para la tarea:');
 
+    //Por default asumo que la tarea esta en la primer lista
+    let lista_a_editar = ul_lista;
 
+    //verifico si esta en la segunda
+    let tareaEnCajitaDestino = cajita_destino.querySelector(`li[data-id="${id}"]`)
+    //verifico si existe la tarea en la segunda lista
+    if (tareaEnCajitaDestino) {
+        lista_a_editar = cajita_destino;
+    }
 
     let tareaEncontrada = almacenamientoTareas.find(item => item.id == id);
-
+    //le asigno el nuevo nombre a la tarea
     if (tareaEncontrada) {
         tareaEncontrada.nombre = nombre_tarea
 
-        actualizarTareaEnDom(tareaEncontrada);
+        actualizarTareaEnDom(tareaEncontrada, lista_a_editar);
+
     } else {
         alert("No se encontró una tarea con el ID proporcionado.");
     }
@@ -122,12 +153,18 @@ function editarTarea() {
 //FUNCION actualizarTareaEnDom()
 //Una vez detectado en mi array global recibo ese elemento, 
 //lo busco en el DOM,le asigno el valor del elemento del array
-function actualizarTareaEnDom(tarea) {
+function actualizarTareaEnDom(tarea, lista_a_editar) {
 
-    let elementoLista = ul_lista.querySelector(`li[data-id="${tarea.id}"]`)
+    let elementoLista = lista_a_editar.querySelector(`li[data-id="${tarea.id}"]`)
 
+    //compruebo en que lista estoy para determinar el valor de 'ESTADO'
+    if (lista_a_editar === ul_lista) {
 
-    elementoLista.innerHTML = `ID: <span class="id-destacado">${tarea.id}</span> Nombre de Tarea:<span class="tarea-destacado"> ${tarea.nombre}</span> Estado: <span class="estado-destacado">${ESTADO.EN_CURSO}</span>`;
+        elementoLista.innerHTML = `ID: <span class="id-destacado">${tarea.id}</span> Nombre de Tarea:<span class="tarea-destacado"> ${tarea.nombre}</span> Estado: <span class="estado-destacado">${ESTADO.EN_CURSO}</span>`;
+    } else {
+
+        elementoLista.innerHTML = `ID: <span class="id-destacado">${tarea.id}</span> Nombre de Tarea:<span class="tarea-destacado"> ${tarea.nombre}</span> Estado: <span class="estado-destacado">${ESTADO.PENDIENTE}</span>`;
+    }
 
 
 }
